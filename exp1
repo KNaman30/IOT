@@ -1,4 +1,4 @@
-#exp1
+#exp1(led blink)
 int LEDpin = 13;
 int delayT = 1000;
 void setup() {
@@ -11,4 +11,190 @@ digitalWrite(LEDpin, LOW);
 delay(2000);
 }
 
+
+#exp2(led with push button)
+const int buttonPin = 2; const int
+ledPin =13;
+int buttonState = HIGH; void
+setup(){
+pinMode(ledPin,OUTPUT);
+pinMode(buttonPin,INPUT);
+} void loop(){ buttonState =
+digitalRead(buttonPin);
+ if (buttonState == LOW){
+digitalWrite(ledPin,HIGH);
+ }else{ digitalWrite(ledPin,LOW);
+ }
+}
+
+
+#exp3(ldr with aurdino)
+int sensorPin = A0; int
+ledPin = 2;
+void setup()
+{
+ Serial.begin(9600); pinMode(sensorPin,
+INPUT); pinMode(ledPin, OUTPUT);
+} void loop()
+{ int sensorValue = analogRead(sensorPin); if( sensorValue <= 300 ) //
+Change the value as per your requirement
+ {
+ digitalWrite(ledPin, LOW);
+Serial.print("LED ON ");
+Serial.println(sensorValue); delay(100);
+ } else
+{
+ digitalWrite(ledPin, HIGH);
+ Serial.println("LED OFF");
+ }
+
+
+#exp4(multiple leds with ldr)
+#include <Arduino.h>
+const int ldrPin = A0;
+const int led1Pin = 9;
+const int led2Pin = 10;
+const int led3Pin = 11;
+void setup() {
+ Serial.begin(9600);
+ pinMode(led1Pin, OUTPUT);
+ pinMode(led2Pin, OUTPUT);
+ pinMode(led3Pin, OUTPUT);
+}
+void loop() {
+ int ldrValue = analogRead(ldrPin); // Read LDR value
+Serial.print("LDR Value: ");
+Serial.println(ldrValue);
+ if (ldrValue >= 100 && ldrValue <= 200) {
+ digitalWrite(led1Pin, HIGH);
+ digitalWrite(led2Pin, LOW);
+ digitalWrite(led3Pin, LOW);
+ } else if (ldrValue >= 300 && ldrValue <= 500) {
+ digitalWrite(led1Pin, LOW);
+ digitalWrite(led2Pin, HIGH);
+ digitalWrite(led3Pin, LOW);
+ } else if (ldrValue >= 500 && ldrValue <= 800) {
+ digitalWrite(led1Pin, LOW);
+ digitalWrite(led2Pin, LOW);
+ digitalWrite(led3Pin, HIGH);
+ } else {
+ digitalWrite(led1Pin, LOW);
+ digitalWrite(led2Pin, LOW);
+ digitalWrite(led3Pin, LOW);
+ }
+delay(500);
+}
+
+
+#exp5(dht11 with aurdino)
+#include <DFRobot_DHT11.h>
+DFRobot_DHT11 DHT;
+#define DHT11_PIN 10
+const int temp = 11;
+const int humid = 12;
+void setup(){
+Serial.begin(9600);
+delay(500);
+Serial.println("DTH Humidity & Temp Sensor: ");
+delay(1000);
+pinMode(temp, OUTPUT);
+pinMode(humid, OUTPUT);
+}
+void loop(){
+DHT.read(DHT11_PIN);
+Serial.print("Temp = ");
+Serial.print(DHT.temperature);
+Serial.println("C, ");
+Serial.print("Humidity = ");
+Serial.println(DHT.humidity);
+Serial.print("%");
+//delay(5000);
+if(DHT.temperature >=23)
+{
+digitalWrite(temp, HIGH); }
+else
+{ digitalWrite(temp, LOW);
+}
+if(DHT.humidity >=50)
+{ digitalWrite(humid, HIGH);
+}
+else
+{
+digitalWrite(humid, LOW);
+}
+delay(2500);
+}
+
+
+
+#exp6(multiple leds with dht)
+#include <DHT.h>
+#define DHTPIN 7
+#define DHTTYPE DHT11
+DHT dht(DHTPIN, DHTTYPE);
+const int led1Pin = 9;
+const int led2Pin = 10;
+const int led3Pin = 11;
+void setup() {
+ Serial.begin(9600);
+ Serial.println("DHTxx test!");
+ dht.begin();
+
+ pinMode(led1Pin, OUTPUT);
+ pinMode(led2Pin, OUTPUT);
+ pinMode(led3Pin, OUTPUT);
+}
+void loop() {
+ delay(2000);
+ float temperature = dht.readTemperature();
+ float humidity = dht.readHumidity();
+if (isnan(temperature) || isnan(humidity)) {
+ Serial.println("Failed to read from DHT sensor!");
+ return;
+ }
+ Serial.print("Temperature: ");
+ Serial.print(temperature);
+ Serial.println("°C");
+ Serial.print("Humidity: ");
+ Serial.print(humidity);
+ Serial.println("%")
+// Turn on/off LEDs based on temperature and humidity thresholds
+ if (temperature > 20 && humidity < 50) {
+ digitalWrite(led1Pin, LOW);
+ digitalWrite(led2Pin, LOW);
+ digitalWrite(led3Pin, HIGH); // Turn on only the third LED
+ } else if (temperature >= 20 && temperature < 25 && humidity >= 50 &&
+humidity < 70) {
+ digitalWrite(led1Pin, LOW);
+ digitalWrite(led2Pin, HIGH); // Turn on only the second LED
+ digitalWrite(led3Pin, LOW);
+ } else {
+ digitalWrite(led1Pin, HIGH); // Turn on only the first LED
+ digitalWrite(led2Pin, LOW);
+ digitalWrite(led3Pin, LOW);
+ } }
+
+
+#exp7(hc-05 bluetooth with aurdino)
+int led = 13;
+int data;
+void setup()
+{
+ Serial.begin(9600);
+ pinMode(13, OUTPUT);
+}
+void loop()
+{
+ while(Serial.available() > 0)
+ {
+ data = Serial.read();
+ Serial.println(data);
+ if(data == 'A')
+ {
+ digitalWrite(13, HIGH);
+ }
+ if(data == 'B')
+ {
+ digitalWrite(13, LOW);
+ } }}
 
