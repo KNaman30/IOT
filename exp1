@@ -1,0 +1,12 @@
+#exp1
+int LEDpin = 13;
+int delayT = 1000;
+void setup() {
+pinMode (LEdpin, OUTPUT);
+}
+void loop() {
+digitalWrite (LEDpin, HIGH);
+delay(1000);
+digitalWrite(LEDpin, LOW);
+delay(2000);
+}
